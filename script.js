@@ -6,14 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileNameDisplay = document.getElementById("fileNameDisplay");
   const statusMessage = document.getElementById("statusMessage");
   const transcriptOutput = document.getElementById("transcriptOutput");
-  const editTranscriptBtn = document.getElementById("editTranscriptBtn");
-  const copyTranscriptBtn = document.getElementById("copyTranscriptBtn");
   const reloadPageBtn = document.getElementById("reloadPageBtn");
-    //    
   const addTranscriptBtn = document.getElementById("add-transcript");
   const transcriptsContainer = document.getElementById("transcripts");
-  const clearTranscriptBtns = document.querySelectorAll(".clearTranscriptBtn");
-  const doneBtn = document.getElementById('doneBtn');
 
   let mediaRecorder;
   let recordedChunks = [];
@@ -30,15 +25,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const transcriptBtns = document.createElement("div");
     transcriptBtns.classList.add("transcript-btns");
+
     const editTranscriptBtn = document.createElement("button");
     const copyTranscriptBtn = document.createElement("button");
     const clearTranscriptBtn = document.createElement("button");
+    const doneBtn = document.createElement("button");
+    doneBtn.style.backgroundColor = "#ccc";
+
     editTranscriptBtn.textContent = "Edit Transcript";
     copyTranscriptBtn.textContent = "Copy Transcript";
     clearTranscriptBtn.textContent = "Clear Transcript";
+    doneBtn.textContent = "Done";
+    doneBtn.style.display = "none";
+
+    editTranscriptBtn.disabled = true;
+    copyTranscriptBtn.disabled = true;
+
     editTranscriptBtn.disabled = true;
     copyTranscriptBtn.disabled = true;
     clearTranscriptBtn.disabled = false;
+
+    editTranscriptBtn.addEventListener("click", () => {
+      textBox.disabled = false;
+      doneBtn.style.display = "inline-block";
+      editTranscriptBtn.disabled = true;
+    });
+
+    copyTranscriptBtn.addEventListener("click", () => {
+      textBox.disabled = false;
+      textBox.select();
+      // document.execCommand("copy");
+      navigator.clipboard.writeText(textBox.value);
+      textBox.disabled = true;
+      statusMessage.textContent = "Transcript copied to clipboard!";
+    });
+
+    doneBtn.addEventListener("click", () => {
+      textBox.disabled = true;
+      doneBtn.style.display = "none";
+      editTranscriptBtn.disabled = false;
+    });
 
     clearTranscriptBtn.addEventListener("click", () => {
       transcriptsContainer.removeChild(transcript);
@@ -47,39 +73,34 @@ document.addEventListener("DOMContentLoaded", () => {
     transcriptBtns.appendChild(editTranscriptBtn);
     transcriptBtns.appendChild(copyTranscriptBtn);
     transcriptBtns.appendChild(clearTranscriptBtn);
+    transcriptBtns.appendChild(doneBtn);
 
     transcript.appendChild(textBox);
     transcript.appendChild(transcriptBtns);
 
     transcriptsContainer.appendChild(transcript);
+
+    transcript.scrollIntoView({ behavior: "smooth" });
+
+    return textBox;
   }
 
   function handleError(error) {
     transcriptOutput.value = `Error: ${error.message}`;
     statusMessage.textContent = "";
     window.location.reload();
-    toggleButtons(true, true, false, false, false);
+    toggleButtons(true, true, false);
   }
 
-  function toggleButtons(
-    transcriptEnabled,
-    recordEnabled,
-    stopEnabled,
-    editEnabled,
-    copyEnabled
-  ) {
+  function toggleButtons(transcriptEnabled, recordEnabled, stopEnabled) {
     transcriptBtn.disabled = !transcriptEnabled;
     recordAudioBtn.disabled = !recordEnabled;
     stopRecordingBtn.disabled = !stopEnabled;
-    editTranscriptBtn.disabled = !editEnabled;
-    copyTranscriptBtn.disabled = !copyEnabled;
   }
 
   async function uploadAudio(audioBlob) {
     const formData = new FormData();
     formData.append("files", audioBlob);
-
-    transcriptOutput.value = "";
 
     statusMessage.textContent =
       "Please wait, we are transcribing your audio note. Transcription time depends on the length of the audio.";
@@ -93,9 +114,25 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         const result = await response.json();
         const transcript = result.results[0].transcript;
-        transcriptOutput.value = transcript;
+
+        const newTranscriptBox = addTranscript();
+        newTranscriptBox.value = transcript;
+        newTranscriptBox.disabled = true;
+
+        const transcriptContainer = newTranscriptBox.parentNode;
+        const editTranscriptBtn = transcriptContainer.querySelector("button:first-child");
+        const copyTranscriptBtn = transcriptContainer.querySelector(
+          "button:nth-child(2)"
+        );
+
+        editTranscriptBtn.disabled = false;
+        copyTranscriptBtn.disabled = false;
+
         statusMessage.textContent = "Transcription complete!";
-        toggleButtons(true, true, false, true, true);
+        toggleButtons(true, true, false);
+
+        audioFileInput.value = "";
+        fileNameDisplay.textContent = "No file chosen";
       } else {
         handleError(new Error(response.statusText));
       }
@@ -111,14 +148,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ? audioFileInput.files[0].name
         : "No file chosen";
     fileNameDisplay.textContent = fileName;
-    toggleButtons(!!audioFileInput.files.length, true, false, false, false);
+    toggleButtons(!!audioFileInput.files.length, true, false);
   });
 
   transcriptBtn.addEventListener("click", async () => {
     if (audioFileInput.files.length > 0) {
       statusMessage.textContent =
         "Please wait, we are transcribing your audio note. Transcription time depends on the length of the audio.";
-      toggleButtons(false, false, false, false, false);
+      toggleButtons(false, false, false);
       await uploadAudio(audioFileInput.files[0]);
     }
   });
@@ -138,13 +175,13 @@ document.addEventListener("DOMContentLoaded", () => {
         recordedChunks = []; // Reset for next recording
         await uploadAudio(audioBlob);
         isRecording = false;
-        toggleButtons(true, true, false, true, true);
+        toggleButtons(true, true, false);
       };
 
       mediaRecorder.start();
       isRecording = true;
       statusMessage.textContent = "Recording... Please start speaking.";
-      toggleButtons(false, false, true, false, false);
+      toggleButtons(false, false, true);
     } catch (error) {
       handleError(error);
     }
@@ -157,48 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
       statusMessage.textContent =
         "Please wait, we are transcribing your audio note. Transcription time depends on the length of the audio.";
     }
-  });
-
-  // Transcript editing and copying
-  editTranscriptBtn.addEventListener("click", () => {
-    transcriptOutput.disabled = false;
-    editTranscriptBtn.disabled = true;
-    copyTranscriptBtn.disabled = false;
-    doneBtn.style.display = "block";
-  });
-
-  doneBtn.addEventListener("click", () => {
-    transcriptOutput.disabled = true;
-    doneBtn.style.display = "none";
-  })
-
-  copyTranscriptBtn.addEventListener("click", () => {
-    const transcriptText = transcriptOutput.value;
-
-    // Temporary enable textarea to select the content
-    transcriptOutput.disabled = false;
-    transcriptOutput.select();
-
-    if (navigator.clipboard) {
-      navigator.clipboard
-        .writeText(transcriptText)
-        .then(() => {
-          statusMessage.textContent = "Transcript copied to clipboard!";
-        })
-        .catch((err) => {
-          console.error("Failed to copy: ", err);
-        });
-    } else {
-      // Fallback for non-secure context
-      if (document.execCommand("copy")) {
-        alert("Transcript copied to clipboard!");
-      } else {
-        alert("Failed to copy the transcript.");
-      }
-    }
-
-    // Re-disable the textarea after copying
-    transcriptOutput.disabled = true;
   });
 
   // Page reload
