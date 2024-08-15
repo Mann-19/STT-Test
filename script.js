@@ -102,6 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const formData = new FormData();
     formData.append("files", audioBlob);
 
+    const loadingSpinner = document.getElementById("spinner");
+    loadingSpinner.style.display = "block";
+
     statusMessage.textContent =
       "Please wait, we are transcribing your audio note. Transcription time depends on the length of the audio.";
 
@@ -138,6 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (error) {
       handleError(error);
+    } finally {
+      loadingSpinner.style.display = "none";
     }
   }
 
