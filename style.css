@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Geologica:wght@100..900&family=League+Spartan:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling for buttons and layout */
+body {
+  font-family: "Geologica", sans-serif;
+}
+
+.navbar {
+  background-color: #007bff;
+  padding: 15px 20px;
+}
+
+#logo {
+  color: white;
+  letter-spacing: 3px;
+  margin-left: 20px;
+}
+
+.main-space {
+  display: flex;
+}
+
+.sidebar {
+  background-color: #f9f9f9;
+  width: 25vw;
+  height: 100vh;
+  padding: 20px;
+}
+
+.sidebar h1 {
+  color: #333;
+}
+
+.upload-section {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+}
+
+#transcriptBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.record-section {
+  display: flex;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+#statusMessage {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+button:disabled {
+  background-color: #bbbbbb;
+  color: black;
+  cursor: not-allowed;
+}
+
+.transcripts {
+  padding: 20px;
+  width: 75vw;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.transcript-btns {
+  display: flex;
+  gap: 15px;
+}
+
+#transcriptOutput {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#steps {
+  border-top: 1px solid #ccc;
+  padding: 20px 50px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+#steps h2 {
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+#steps .points {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+#steps .points strong {
+  display: block;
+}

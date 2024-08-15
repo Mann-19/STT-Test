@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Audio Upload and Record</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <h1 id="logo">DictaWrite</h1>
+    </nav>
+
+    <main class="main-space">
+      <aside class="sidebar">
+        <h1>Audio Utilities</h1>
+  
+        <div class="upload-section">
+          <!-- Upload Audio Section -->
+          <button onclick="document.getElementById('audioFileInput').click()">
+            Upload Audio
+            <span class="material-symbols-outlined">
+              upload
+            </span>
+          </button>
+          <input
+            type="file"
+            id="audioFileInput"
+            accept="audio/*"
+            style="display: none"
+          />
+          <span id="fileNameDisplay">No file chosen</span>
+          <button id="transcriptBtn" disabled>
+            Transcript
+            <span class="material-symbols-outlined">
+              play_arrow
+            </span>
+          </button>
+        </div>
+  
+        <div class="record-section">
+          <!-- Record Audio Section -->
+          <button id="recordAudioBtn">
+            Record Audio
+            <span class="material-symbols-outlined">
+              mic
+            </span>
+          </button>
+          <button id="stopRecordingBtn" disabled>Stop Recording</button>
+        </div>
+  
+        <!-- Status Message -->
+        <p id="statusMessage"></p>
+      </aside>
+
+      <section class="transcripts">
+        <!-- Transcript Output and Actions -->
+        <h1>Transcripts</h1>
+
+        <textarea id="transcriptOutput" rows="10" cols="100" disabled></textarea>
+        
+        <div class="transcript-btns">
+          <button id="editTranscriptBtn" disabled>Edit Transcript</button>
+          <button id="copyTranscriptBtn" disabled>Copy to Clipboard</button>
+          <button id="reloadPageBtn">Refresh</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Steps Section -->
+    <div id="steps">
+      <h2>Anatomy of the Application</h2>
+      <ol class="points">
+        <li>
+          <strong>Record New Audio:</strong> Click "Record Audio" to start
+          recording, then "Stop Recording" to stop and transcribe.
+        </li>
+        <li>
+          <strong>Upload an Audio File:</strong> Click "Upload Audio", select an
+          audio file, and then click "Transcript" to transcribe.
+        </li>
+        <li>
+          <strong>Edit the Transcript:</strong> Use the "Edit Transcript" button
+          to modify the transcript text.
+        </li>
+        <li>
+          <strong>Copy the Transcript:</strong> Click "Copy to Clipboard" to
+          copy the transcript text.
+        </li>
+        <li>
+          <strong>Reload the Page:</strong> Click "Reload Page" to reset the
+          application and start over.  <br><strong>Note: </strong> After each transcription, it is advisable to reload the page before starting a new transcription.
+        </li>
+      </ol>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
