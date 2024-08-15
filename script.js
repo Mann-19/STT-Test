@@ -9,10 +9,50 @@ document.addEventListener("DOMContentLoaded", () => {
   const editTranscriptBtn = document.getElementById("editTranscriptBtn");
   const copyTranscriptBtn = document.getElementById("copyTranscriptBtn");
   const reloadPageBtn = document.getElementById("reloadPageBtn");
+    //    
+  const addTranscriptBtn = document.getElementById("add-transcript");
+  const transcriptsContainer = document.getElementById("transcripts");
+  const clearTranscriptBtns = document.querySelectorAll(".clearTranscriptBtn");
+  const doneBtn = document.getElementById('doneBtn');
 
   let mediaRecorder;
   let recordedChunks = [];
   let isRecording = false;
+
+  function addTranscript() {
+    const transcript = document.createElement("div");
+    transcript.classList.add("transcript-container");
+
+    const textBox = document.createElement("textarea");
+    textBox.classList.add("transcript-output");
+    textBox.rows = "10";
+    textBox.cols = "100";
+
+    const transcriptBtns = document.createElement("div");
+    transcriptBtns.classList.add("transcript-btns");
+    const editTranscriptBtn = document.createElement("button");
+    const copyTranscriptBtn = document.createElement("button");
+    const clearTranscriptBtn = document.createElement("button");
+    editTranscriptBtn.textContent = "Edit Transcript";
+    copyTranscriptBtn.textContent = "Copy Transcript";
+    clearTranscriptBtn.textContent = "Clear Transcript";
+    editTranscriptBtn.disabled = true;
+    copyTranscriptBtn.disabled = true;
+    clearTranscriptBtn.disabled = false;
+
+    clearTranscriptBtn.addEventListener("click", () => {
+      transcriptsContainer.removeChild(transcript);
+    });
+
+    transcriptBtns.appendChild(editTranscriptBtn);
+    transcriptBtns.appendChild(copyTranscriptBtn);
+    transcriptBtns.appendChild(clearTranscriptBtn);
+
+    transcript.appendChild(textBox);
+    transcript.appendChild(transcriptBtns);
+
+    transcriptsContainer.appendChild(transcript);
+  }
 
   function handleError(error) {
     transcriptOutput.value = `Error: ${error.message}`;
@@ -124,7 +164,13 @@ document.addEventListener("DOMContentLoaded", () => {
     transcriptOutput.disabled = false;
     editTranscriptBtn.disabled = true;
     copyTranscriptBtn.disabled = false;
+    doneBtn.style.display = "block";
   });
+
+  doneBtn.addEventListener("click", () => {
+    transcriptOutput.disabled = true;
+    doneBtn.style.display = "none";
+  })
 
   copyTranscriptBtn.addEventListener("click", () => {
     const transcriptText = transcriptOutput.value;
@@ -159,4 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
   reloadPageBtn.addEventListener("click", () => {
     window.location.reload();
   });
+
+  addTranscriptBtn.addEventListener("click", addTranscript);
 });

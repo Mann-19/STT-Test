@@ -58,6 +58,13 @@ body {
   margin-top: 40px;
 }
 
+#reloadPageBtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 #statusMessage {
   margin-top: 20px;
 }
@@ -80,6 +87,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/*  */
 .transcripts {
   padding: 20px;
   width: 75vw;
@@ -93,11 +101,19 @@ button:disabled {
   gap: 15px;
 }
 
-#transcriptOutput {
+.transcript-output {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+#doneBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #d9d9d9;
+  display: none;
 }
 
 #steps {
@@ -123,26 +139,35 @@ button:disabled {
 }
 
 @media (max-width: 768px) {
-    .main-space{
-        flex-direction: column;
-    }
+  .navbar {
+    display: flex;
+    justify-content: center;
+  }
 
-    .sidebar{
-        width: 100vw;
-        height: max-content;
-    }
+  .main-space {
+    flex-direction: column;
+  }
 
-    .transcripts{
-        width: 100%;
-    }
+  .sidebar {
+    width: 100vw;
+    height: max-content;
+  }
 
-    .transcript-btns{
-        flex-direction: column;
-        display: flex;
-        justify-content: center;
-    }
+  .sidebar h1 {
+    text-align: center;
+  }
 
-    #steps{
-        text-align: justify;
-    }
+  .transcripts {
+    width: 100%;
+  }
+
+  .transcript-btns {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+  }
+
+  #steps {
+    text-align: justify;
+  }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Audio Upload and Record</title>
+    <title>DictaWrite</title>
   </head>
   <body>
     <nav class="navbar">
@@ -14,7 +14,7 @@
 
     <main class="main-space">
       <aside class="sidebar">
-        <h1>Audio Utilities</h1>
+        <h1>We convert your transcription to text</h1>
   
         <div class="upload-section">
           <!-- Upload Audio Section -->
@@ -49,6 +49,8 @@
           </button>
           <button id="stopRecordingBtn" disabled>Stop Recording</button>
         </div>
+
+        <button id="reloadPageBtn">Refresh</button>
   
         <!-- Status Message -->
         <p id="statusMessage"></p>
@@ -58,13 +60,19 @@
         <!-- Transcript Output and Actions -->
         <h1>Transcripts</h1>
 
-        <textarea id="transcriptOutput" rows="10" cols="100" disabled></textarea>
+        <!-- <div id="transcripts"></div> -->
+        <div style="position: relative;">
+          <textarea id="transcriptOutput" class="transcript-output" rows="10" cols="100" disabled></textarea>
+          <button id="doneBtn">Done</button>
+        </div>
         
         <div class="transcript-btns">
           <button id="editTranscriptBtn" disabled>Edit Transcript</button>
           <button id="copyTranscriptBtn" disabled>Copy to Clipboard</button>
-          <button id="reloadPageBtn">Refresh</button>
+          <button id="clearTranscriptBtn" class="clearTranscriptBtn" disabled>Clear Transcript</button>
         </div>
+
+        <!-- <button id="add-transcript">Add More +</button> -->
       </section>
     </main>
 
