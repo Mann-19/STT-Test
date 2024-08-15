@@ -37,7 +37,7 @@ body {
 }
 
 .sidebar h1 {
-  color: #333;
+  color: #295f00;
 }
 
 .upload-section {
@@ -77,8 +77,8 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff;
-  color: white;
+  background-color: #dfe8d5;
+  color: #295f00;
   display: flex;
   align-items: center;
   gap: 3px;
@@ -100,6 +100,10 @@ button:disabled {
   overflow-y: scroll;
 }
 
+.transcripts h1{
+  color: #333;
+}
+
 .transcript-btns {
   display: flex;
   gap: 15px;
@@ -115,8 +119,8 @@ button:disabled {
 
 .spinner{
   display: none;
-  border: 10px solid #ccc;
-  border-top: 10px solid #007bff;
+  border: 10px solid #bbbbbb;
+  border-top: 10px solid #295f00;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -148,7 +152,7 @@ button:disabled {
 }
 
 #steps h2 {
-  color: #007bff;
+  color: #295f00;
   margin-bottom: 15px;
 }
 
