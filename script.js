@@ -86,8 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleError(error) {
-    transcriptOutput.value = `Error: ${error.message}`;
-    statusMessage.textContent = "";
+    // transcriptOutput.value = `Error: ${error.message}`;
+    statusMessage.textContent = `Error: ${error.message}`;
+    statusMessage.style.color = "red";
     window.location.reload();
     toggleButtons(true, true, false);
   }
@@ -205,6 +206,4 @@ document.addEventListener("DOMContentLoaded", () => {
   reloadPageBtn.addEventListener("click", () => {
     window.location.reload();
   });
-
-  addTranscriptBtn.addEventListener("click", addTranscript);
 });

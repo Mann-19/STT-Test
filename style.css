@@ -12,14 +12,15 @@ body {
 }
 
 .navbar {
-  background-color: #007bff;
-  padding: 15px 20px;
+  background-color: #dfe8d5;
+  height: fit-content;
+  display: flex;
+  align-items: center;
 }
 
 #logo {
-  color: white;
-  letter-spacing: 3px;
-  margin-left: 20px;
+  width: 200px;
+  height: 100%;
 }
 
 .main-space {
