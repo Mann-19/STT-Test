@@ -121,3 +121,28 @@ button:disabled {
 #steps .points strong {
   display: block;
 }
+
+@media (max-width: 768px) {
+    .main-space{
+        flex-direction: column;
+    }
+
+    .sidebar{
+        width: 100vw;
+        height: max-content;
+    }
+
+    .transcripts{
+        width: 100%;
+    }
+
+    .transcript-btns{
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+    }
+
+    #steps{
+        text-align: justify;
+    }
+}
