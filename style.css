@@ -100,7 +100,7 @@ button:disabled {
   overflow-y: scroll;
 }
 
-.transcripts h1{
+.transcripts h1 {
   color: #333;
 }
 
@@ -122,9 +122,9 @@ button:disabled {
   margin-top: 20px;
 }
 
-.spinner{
+.spinner {
   display: none;
-  border: 10px solid #bbbbbb;
+  border: 10px solid #dfe8d5;
   border-top: 10px solid #295f00;
   border-radius: 50%;
   width: 40px;
@@ -134,11 +134,16 @@ button:disabled {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1000;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 #doneBtn {
@@ -205,14 +210,13 @@ button:disabled {
   }
 }
 
-
-.desc-text{
+.desc-text {
   color: #888;
   font-size: 0.7rem;
   margin-top: 10px;
 }
 
-.record-descs{
+.record-descs {
   display: flex;
   gap: 12px;
   text-align: center;

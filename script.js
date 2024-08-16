@@ -7,12 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusMessage = document.getElementById("statusMessage");
   const transcriptOutput = document.getElementById("transcriptOutput");
   const reloadPageBtn = document.getElementById("reloadPageBtn");
-  const addTranscriptBtn = document.getElementById("add-transcript");
+  const addTranscriptBtn = document.getElementById("add-transcript-btn");
   const transcriptsContainer = document.getElementById("transcripts");
 
   let mediaRecorder;
   let recordedChunks = [];
   let isRecording = false;
+  let currentTranscriptBox = null;
 
   function addTranscript() {
     const transcript = document.createElement("div");
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     textBox.classList.add("transcript-output");
     textBox.rows = "10";
     textBox.cols = "100";
+    textBox.disabled = true;
 
     const transcriptBtns = document.createElement("div");
     transcriptBtns.classList.add("transcript-btns");
@@ -36,9 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const doneBtn = document.createElement("button");
     doneBtn.style.backgroundColor = "#ccc";
 
-    const editDescText = document.createElement('span');
-    const copyDescText = document.createElement('span');
-    const clearDescText = document.createElement('span');
+    const editDescText = document.createElement("span");
+    const copyDescText = document.createElement("span");
+    const clearDescText = document.createElement("span");
     editDescText.textContent = "Edit the output transcription";
     copyDescText.textContent = "Copy the output transcript to clipboard";
     clearDescText.textContent = "Clear the current transcript box";
@@ -96,17 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
     transcript.appendChild(textBox);
     transcript.appendChild(transcriptBtns);
 
-    transcriptsContainer.appendChild(transcript);
+    // transcriptsContainer.appendChild(transcript);
+    transcriptsContainer.insertBefore(transcript, transcriptsContainer.firstChild);
 
-    transcript.scrollIntoView({ behavior: "smooth" });
+    // transcript.scrollIntoView({ behavior: "smooth" });
 
-    return textBox;
+    currentTranscriptBox = textBox;
   }
 
   function handleError(error) {
-    // transcriptOutput.value = `Error: ${error.message}`;
-    statusMessage.textContent = `Error: ${error.message}`;
-    statusMessage.style.color = "red";
+    if (currentTranscriptBox) {
+      currentTranscriptBox.value = `Error: ${error.message}`;
+    }
     window.location.reload();
     toggleButtons(true, true, false);
   }
@@ -137,18 +140,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         const transcript = result.results[0].transcript;
 
-        const newTranscriptBox = addTranscript();
-        newTranscriptBox.value = transcript;
-        newTranscriptBox.disabled = true;
-
-        const transcriptContainer = newTranscriptBox.parentNode;
-        const editTranscriptBtn = transcriptContainer.querySelector("button:first-child");
-        const copyTranscriptBtn = transcriptContainer.querySelector(
-          "button:nth-child(2)"
-        );
-
-        editTranscriptBtn.disabled = false;
-        copyTranscriptBtn.disabled = false;
+        if (currentTranscriptBox) {
+          currentTranscriptBox.value = transcript;
+          const transcriptContainer = currentTranscriptBox.parentNode;
+          const editTranscriptBtn =
+            transcriptContainer.querySelector("button:first-child");
+          const copyTranscriptBtn = transcriptContainer.querySelector(
+            "button:nth-child(2)"
+          );
+          editTranscriptBtn.disabled = false;
+          copyTranscriptBtn.disabled = false;
+        }
 
         statusMessage.textContent = "Transcription complete!";
         toggleButtons(true, true, false);
@@ -224,4 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
   reloadPageBtn.addEventListener("click", () => {
     window.location.reload();
   });
+
+  addTranscriptBtn.addEventListener("click", addTranscript);
 });
