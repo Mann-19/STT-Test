@@ -25,12 +25,13 @@
             </span>
           </button>
           <input
-            type="file"
-            id="audioFileInput"
-            accept="audio/*"
-            style="display: none"
+          type="file"
+          id="audioFileInput"
+          accept="audio/*"
+          style="display: none"
           />
           <span id="fileNameDisplay">No file chosen</span>
+          <span class="desc-text" style="margin-top: 0px;">Upload .mp3 files for transcription</span>
           <button id="transcriptBtn" disabled>
             Transcript
             <span class="material-symbols-outlined">
@@ -49,8 +50,14 @@
           </button>
           <button id="stopRecordingBtn" disabled>Stop Recording</button>
         </div>
+        <div class="record-descs">
+          <span class="desc-text">Starts recording user audio</span>
+          <span class="desc-text">Stops recording user audio</span>
+        </div>
 
         <button id="reloadPageBtn">Refresh</button>
+        <span class="desc-text">Refresh page to reset app</span> <br>
+        <span class="desc-text" style="color: red; opacity: 0.5;">Note! removes all transcripts</span>
   
         <!-- Status Message -->
         <p id="statusMessage"></p>

@@ -29,8 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const editTranscriptBtn = document.createElement("button");
     const copyTranscriptBtn = document.createElement("button");
     const clearTranscriptBtn = document.createElement("button");
+    editTranscriptBtn.classList.add("transcript-btn");
+    copyTranscriptBtn.classList.add("transcript-btn");
+    clearTranscriptBtn.classList.add("transcript-btn");
+
     const doneBtn = document.createElement("button");
     doneBtn.style.backgroundColor = "#ccc";
+
+    const editDescText = document.createElement('span');
+    const copyDescText = document.createElement('span');
+    const clearDescText = document.createElement('span');
+    editDescText.textContent = "Edit the output transcription";
+    copyDescText.textContent = "Copy the output transcript to clipboard";
+    clearDescText.textContent = "Clear the current transcript box";
+    editDescText.classList.add("desc-text");
+    copyDescText.classList.add("desc-text");
+    clearDescText.classList.add("desc-text");
 
     editTranscriptBtn.textContent = "Edit Transcript";
     copyTranscriptBtn.textContent = "Copy Transcript";
@@ -74,6 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
     transcriptBtns.appendChild(copyTranscriptBtn);
     transcriptBtns.appendChild(clearTranscriptBtn);
     transcriptBtns.appendChild(doneBtn);
+
+    editTranscriptBtn.appendChild(editDescText);
+    copyTranscriptBtn.appendChild(copyDescText);
+    clearTranscriptBtn.appendChild(clearDescText);
 
     transcript.appendChild(textBox);
     transcript.appendChild(transcriptBtns);

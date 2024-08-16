@@ -108,6 +108,11 @@ button:disabled {
   display: flex;
   gap: 15px;
 }
+.transcript-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
 
 .transcript-output {
   width: 100%;
@@ -198,4 +203,18 @@ button:disabled {
   #steps {
     text-align: justify;
   }
+}
+
+
+.desc-text{
+  color: #888;
+  font-size: 0.7rem;
+  margin-top: 10px;
+}
+
+.record-descs{
+  display: flex;
+  gap: 12px;
+  text-align: center;
+  /* margin-top: 10px; */
 }
