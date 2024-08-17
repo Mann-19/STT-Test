@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let isRecording = false;
   let currentTranscriptBox = null;
 
+  addTranscript();
+
   function addTranscript() {
     const transcript = document.createElement("div");
     transcript.classList.add("transcript-container");
