@@ -197,6 +197,9 @@ button:disabled {
 
   .transcripts {
     width: 100%;
+    min-height: 80vh;
+    max-height: max-content;
+    overflow-y: auto;
   }
 
   .transcript-btns {
