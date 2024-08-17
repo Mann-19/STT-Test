@@ -154,26 +154,30 @@ button:disabled {
   display: none;
 }
 
-#steps {
+.anatomy {
   border-top: 1px solid #ccc;
   padding: 20px 50px;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
 
-#steps h2 {
+.anatomy h2 {
   color: #295f00;
   margin-bottom: 15px;
 }
 
-#steps .points {
+.anatomy .points {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   gap: 1.5rem;
 }
-#steps .points strong {
+.anatomy .points strong {
   display: block;
+}
+
+.anatomy1 {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -184,6 +188,8 @@ button:disabled {
 
   .main-space {
     flex-direction: column;
+    overflow-y: visible;
+    position: relative;
   }
 
   .sidebar {
@@ -197,9 +203,7 @@ button:disabled {
 
   .transcripts {
     width: 100%;
-    min-height: 80vh;
-    max-height: max-content;
-    overflow-y: auto;
+    overflow-y: visible;
   }
 
   .transcript-btns {
@@ -208,8 +212,31 @@ button:disabled {
     justify-content: center;
   }
 
-  #steps {
+  .anatomy1 {
     text-align: justify;
+    border-top: 1px solid #ccc;
+    padding: 20px 50px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: block;
+  }
+  .anatomy1 h2 {
+    color: #295f00;
+    margin-bottom: 15px;
+  }
+
+  .anatomy1 .points {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .anatomy1 .points strong {
+    display: block;
+  }
+
+  .anatomy {
+    display: none;
   }
 }
 
