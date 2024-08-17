@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const transcript = document.createElement("div");
     transcript.classList.add("transcript-container");
 
+    const wrapper = document.createElement('div');
+    wrapper.classList.add("wrapper");
+
+    const serialNum = document.createElement('p');
+    serialNum.classList.add("serial-num");
+
     const textBox = document.createElement("textarea");
     textBox.classList.add("transcript-output");
     textBox.rows = "10";
@@ -72,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
     copyTranscriptBtn.addEventListener("click", () => {
       textBox.disabled = false;
       textBox.select();
-      // document.execCommand("copy");
       navigator.clipboard.writeText(textBox.value);
       textBox.disabled = true;
       statusMessage.textContent = "Transcript copied to clipboard!";
@@ -97,15 +102,24 @@ document.addEventListener("DOMContentLoaded", () => {
     copyTranscriptBtn.appendChild(copyDescText);
     clearTranscriptBtn.appendChild(clearDescText);
 
-    transcript.appendChild(textBox);
-    transcript.appendChild(transcriptBtns);
+    wrapper.appendChild(textBox);
+    wrapper.appendChild(transcriptBtns);
+    transcript.appendChild(serialNum);
+    transcript.appendChild(wrapper);
 
-    // transcriptsContainer.appendChild(transcript);
     transcriptsContainer.insertBefore(transcript, transcriptsContainer.firstChild);
 
-    // transcript.scrollIntoView({ behavior: "smooth" });
-
     currentTranscriptBox = textBox;
+
+    updateSerialNumbers();
+  }
+
+  function updateSerialNumbers() {
+    const transcripts = transcriptsContainer.querySelectorAll('.transcript-container');
+    transcripts.forEach((transcript, index) => {
+      const serialNum = transcript.querySelector('.serial-num');
+      serialNum.textContent = `${index + 1}.`;
+    });
   }
 
   function handleError(error) {
@@ -229,5 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.reload();
   });
 
-  addTranscriptBtn.addEventListener("click", addTranscript);
+  addTranscriptBtn.addEventListener("click", () => {
+    addTranscript();
+  });
 });

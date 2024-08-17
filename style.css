@@ -91,6 +91,27 @@ button:disabled {
 }
 
 /*  */
+.serial-num{
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 10px;
+  width: fit-content;
+  font-weight: bold;
+  margin: 0;
+  height: max-content;
+}
+
+.transcript-container{
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
 .transcripts {
   padding: 20px;
   width: 75vw;
@@ -107,6 +128,7 @@ button:disabled {
 .transcript-btns {
   display: flex;
   gap: 15px;
+  margin-top: 10px;
 }
 .transcript-btn {
   display: flex;
@@ -120,6 +142,7 @@ button:disabled {
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-top: 20px;
+  height: 100%;
 }
 
 .spinner {
@@ -204,6 +227,7 @@ button:disabled {
   .transcripts {
     width: 100%;
     overflow-y: visible;
+    height: 100vh;
   }
 
   .transcript-btns {
@@ -252,3 +276,4 @@ button:disabled {
   text-align: center;
   /* margin-top: 10px; */
 }
+
