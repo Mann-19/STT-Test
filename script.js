@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clearTranscriptBtn.addEventListener("click", () => {
       transcriptsContainer.removeChild(transcript);
+      updateSerialNumbers();
     });
 
     transcriptBtns.appendChild(editTranscriptBtn);
@@ -116,10 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateSerialNumbers() {
     const transcripts = transcriptsContainer.querySelectorAll('.transcript-container');
+    const totalTranscripts = transcripts.length;
     transcripts.forEach((transcript, index) => {
       const serialNum = transcript.querySelector('.serial-num');
-      serialNum.textContent = `${index + 1}.`;
-    });
+      serialNum.textContent = `${totalTranscripts - index}.`;
+    }); 
   }
 
   function handleError(error) {
