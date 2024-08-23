@@ -17,7 +17,7 @@
 
     <div class="spinner" id="spinner"></div>
     <section class="main-space">
-      <aside class="sidebar">
+      <div class="sidebar">
         <h1>We convert your audio transcription to text</h1>
 
         <div class="upload-section">
@@ -63,49 +63,42 @@
 
         <!-- Status Message -->
         <p id="statusMessage"></p>
-      </aside>
+      </div>
 
-      <section class="transcripts">
+      <div class="transcripts">
         <!-- Transcript Output and Actions -->
         <h1>Transcripts</h1>
         <button id="add-transcript-btn">Add New Transcript Box</button>
 
         <div id="transcripts"></div>
-      </section>
-
-      <div class="anatomy1">
-        <h2>Anatomy of the Application</h2>
-        <ol class="points">
-          <li>
-            <strong>Add new transcript:</strong> Add a new transcript box by
-            clicking the "Add New Transcript Box" button. Make sure to create one
-            before transcribing.
-          </li>
-          <li>
-            <strong>Record New Audio:</strong> Click "Record Audio" to start
-            recording, then "Stop Recording" to stop and transcribe.
-          </li>
-          <li>
-            <strong>Upload an Audio File:</strong> Click "Upload Audio", select an
-            audio file, and then click "Transcript" to transcribe.
-          </li>
-          <li>
-            <strong>Edit the Transcript:</strong> Use the "Edit Transcript" button
-            to modify the transcript text.
-          </li>
-          <li>
-            <strong>Copy the Transcript:</strong> Click "Copy to Clipboard" to
-            copy the transcript text.
-          </li>
-          <li>
-            <strong>Reload the Page:</strong> Click "Reload Page" to reset the
-            application and start over. <br /><strong>Note: </strong> After each
-            transcription, it is advisable to reload the page before starting a
-            new transcription.
-          </li>
-        </ol>
       </div>
     </section>
+
+    <!-- Abbrievations Section -->
+     <section class="abb-section">
+       <h3>Custom Abbrievations</h3>
+
+       <form class="abb-form">
+        <div>
+          <label for="abb" class="abb">Abbrievation</label>
+          <input type="text" autocomplete="off" id="abb-input">
+        </div>
+  
+        <div>
+          <label for="abb-meaning" class="abb-meaning">Meaning(Full Form)</label>
+          <input type="text" autocomplete="off" id="abb-meaning">
+        </div>
+        
+        <div>
+          <button type="submit" id="submit-btn">Add Abbrievation</button>
+          <button id="clear-all-btn">Clear All</button>
+        </div>
+       </form>
+
+       <div class="abbs" id="abbs">
+
+       </div>
+     </section>
 
     <!-- Steps Section -->
     <footer class="anatomy">
@@ -142,5 +135,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- <script src="abbrievations.js"></script> -->
   </body>
 </html>

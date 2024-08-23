@@ -5,11 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const stopRecordingBtn = document.getElementById("stopRecordingBtn");
   const fileNameDisplay = document.getElementById("fileNameDisplay");
   const statusMessage = document.getElementById("statusMessage");
-  const transcriptOutput = document.getElementById("transcriptOutput");
   const reloadPageBtn = document.getElementById("reloadPageBtn");
   const addTranscriptBtn = document.getElementById("add-transcript-btn");
   const transcriptsContainer = document.getElementById("transcripts");
+  const abbrievationsContainer = document.getElementById("abbs");
+  const submitBtn = document.getElementById("submit-btn");
+  const abbrievationInput = document.getElementById("abb-input");
+  const abbrievationMeaning = document.getElementById("abb-meaning");
+  const clearAllAbbrievations = document.getElementById('clear-all-btn');
 
+  let abbrievationStorage = [];
   let mediaRecorder;
   let recordedChunks = [];
   let isRecording = false;
@@ -21,10 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const transcript = document.createElement("div");
     transcript.classList.add("transcript-container");
 
-    const wrapper = document.createElement('div');
+    const wrapper = document.createElement("div");
     wrapper.classList.add("wrapper");
 
-    const serialNum = document.createElement('p');
+    const serialNum = document.createElement("p");
     serialNum.classList.add("serial-num");
 
     const textBox = document.createElement("textarea");
@@ -108,7 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
     transcript.appendChild(serialNum);
     transcript.appendChild(wrapper);
 
-    transcriptsContainer.insertBefore(transcript, transcriptsContainer.firstChild);
+    transcriptsContainer.insertBefore(
+      transcript,
+      transcriptsContainer.firstChild
+    );
 
     currentTranscriptBox = textBox;
 
@@ -116,19 +124,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateSerialNumbers() {
-    const transcripts = transcriptsContainer.querySelectorAll('.transcript-container');
+    const transcripts = transcriptsContainer.querySelectorAll(
+      ".transcript-container"
+    );
     const totalTranscripts = transcripts.length;
     transcripts.forEach((transcript, index) => {
-      const serialNum = transcript.querySelector('.serial-num');
+      const serialNum = transcript.querySelector(".serial-num");
       serialNum.textContent = `${totalTranscripts - index}.`;
-    }); 
+    });
   }
 
   function handleError(error) {
     if (currentTranscriptBox) {
       currentTranscriptBox.value = `Error: ${error.message}`;
     }
-    window.location.reload();
+    statusMessage.textContent = `Error: ${error.message}`;
+    // window.location.reload();
     toggleButtons(true, true, false);
   }
 
@@ -136,6 +147,35 @@ document.addEventListener("DOMContentLoaded", () => {
     transcriptBtn.disabled = !transcriptEnabled;
     recordAudioBtn.disabled = !recordEnabled;
     stopRecordingBtn.disabled = !stopEnabled;
+  }
+
+  function createAbbrievation(abb, meaning) {
+    const abbrievation = document.createElement("div");
+    abbrievation.classList.add("abb-item");
+
+    const abbrievationShort = document.createElement("span");
+    const abbrievationMeans = document.createElement("span");
+    const symbol = document.createElement("span");
+    symbol.className = "material-symbols-outlined";
+    symbol.textContent = "arrow_forward";
+    symbol.style.fontSize = "20px";
+
+    abbrievationShort.textContent = abb;
+    abbrievationMeans.textContent = meaning;
+
+    abbrievation.appendChild(abbrievationShort);
+    abbrievation.appendChild(symbol);
+    abbrievation.appendChild(abbrievationMeans);
+
+    abbrievationsContainer.appendChild(abbrievation);
+  }
+
+  function replaceAbbreviations(transcript) {
+    abbrievationStorage.forEach(({ name, meaning }) => {
+      const regex = new RegExp(`\\b${name}\\b`, "gi");
+      transcript = transcript.replace(regex, meaning);
+    });
+    return transcript;
   }
 
   async function uploadAudio(audioBlob) {
@@ -156,7 +196,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const result = await response.json();
-        const transcript = result.results[0].transcript;
+        let transcript = result.results[0].transcript;
+
+        transcript = replaceAbbreviations(transcript);
 
         if (currentTranscriptBox) {
           currentTranscriptBox.value = transcript;
@@ -183,6 +225,33 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       loadingSpinner.style.display = "none";
     }
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+
+    abbrievationInput.style.border = "2px solid #295f00";
+    abbrievationMeaning.style.border = "2px solid #295f00";
+
+    if (abbrievationInput.value == null || abbrievationInput.value == "") {
+      abbrievationInput.style.border = "2px solid red";
+      return;
+    }
+    if (abbrievationMeaning.value == null || abbrievationMeaning.value == "") {
+      abbrievationMeaning.style.border = "2px solid red";
+      return;
+    }
+
+    // console.log(abbrievationInput.value, ":", abbrievationMeaning.value);
+    abbrievationStorage.push({
+      name: abbrievationInput.value,
+      meaning: abbrievationMeaning.value,
+    });
+    createAbbrievation(abbrievationInput.value, abbrievationMeaning.value);
+
+    abbrievationInput.value = "";
+    abbrievationMeaning.value = "";
+    console.log(abbrievationStorage);
   }
 
   // File upload handling
@@ -248,4 +317,14 @@ document.addEventListener("DOMContentLoaded", () => {
   addTranscriptBtn.addEventListener("click", () => {
     addTranscript();
   });
+
+  submitBtn.addEventListener("click", handleFormSubmit);
+
+  clearAllAbbrievations.addEventListener('click', (e) => {
+    e.preventDefault();
+    abbrievationStorage = [];
+    while (abbrievationsContainer.firstChild) {
+      abbrievationsContainer.removeChild(abbrievationsContainer.lastChild);
+    }
+  })
 });

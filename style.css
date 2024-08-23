@@ -103,13 +103,7 @@ button:disabled {
 
 .transcript-container{
   display: flex;
-  align-items: baseline;
   gap: 20px;
-}
-
-.wrapper{
-  display: flex;
-  flex-direction: column;
 }
 
 .transcripts {
@@ -141,8 +135,12 @@ button:disabled {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-top: 20px;
-  height: 100%;
+}
+
+#transcripts{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
 }
 
 .spinner {
@@ -203,67 +201,6 @@ button:disabled {
   display: none;
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    display: flex;
-    justify-content: center;
-  }
-
-  .main-space {
-    flex-direction: column;
-    overflow-y: visible;
-    position: relative;
-  }
-
-  .sidebar {
-    width: 100vw;
-    height: max-content;
-  }
-
-  .sidebar h1 {
-    text-align: center;
-  }
-
-  .transcripts {
-    width: 100%;
-    overflow-y: visible;
-    height: max-content;
-  }
-
-  .transcript-btns {
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-  }
-
-  .anatomy1 {
-    text-align: justify;
-    border-top: 1px solid #ccc;
-    padding: 20px 50px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    display: block;
-  }
-  .anatomy1 h2 {
-    color: #295f00;
-    margin-bottom: 15px;
-  }
-
-  .anatomy1 .points {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .anatomy1 .points strong {
-    display: block;
-  }
-
-  .anatomy {
-    display: none;
-  }
-}
-
 .desc-text {
   color: #888;
   font-size: 0.7rem;
@@ -275,5 +212,111 @@ button:disabled {
   gap: 12px;
   text-align: center;
   /* margin-top: 10px; */
+}
+
+.abb-section{
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.abb-section h3{
+  font-size: 1.5rem;
+  color: #295f00;
+  margin-bottom: 20px;
+}
+
+.abb-section div{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.abb-form{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.abb-form label{
+  font-size: 1.2rem;
+  color: #295f00;
+}
+
+.abbs{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.abb-item{
+  display: flex;
+  border: 2px solid #dfe8d5;
+  padding: 5px 20px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.abb-item:nth-child(1) {
+  margin-top: 20px;
+}
+
+#abb-meaning, #abb-input{
+  border: 2px solid #295f00;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 50%;
+}
+
+#clear-all-btn{
+  border: 1px solid #ff7474;
+  background-color: #f9f9f9;
+  color: #ff7474;
+}
+
+@media (max-width: 768px) {
+  .navbar{
+    justify-content: center;
+  }
+
+  .main-space{
+    flex-direction: column;
+    overflow-y: auto;
+    height: max-content;
+  }
+
+  .sidebar{
+    width: 100vw;
+    height: auto;
+  }
+
+  .transcripts{
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .transcript-btns{
+    flex-direction: column;
+  }
+
+  .abb-form div{
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .abb-form{
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .abb-form div{
+    width: 100%;
+  }
+
+  #abb-input, #abb-meaning{
+    width: 100%;
+  }
 }
 
