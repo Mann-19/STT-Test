@@ -255,7 +255,7 @@ button:disabled {
   display: flex;
   border: 2px solid #dfe8d5;
   padding: 5px 20px;
-  width: 100%;
+  max-width: 100%;
   border-radius: 10px;
   justify-content: space-between;
 }
@@ -347,6 +347,31 @@ button:disabled {
   }
 
   #abb-input, #abb-meaning{
+    width: 100%;
+  }
+
+  .abb-item{
+    flex-direction: column;
+    align-items: center;
+    /* flex-wrap: wrap; */
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .abb-box{
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .arrow-symbol{
+    transform: rotate(90deg);
+  }
+
+  .util-box{
+    width: 80%;
+  }
+
+  .util-box button{
     width: 100%;
   }
 }

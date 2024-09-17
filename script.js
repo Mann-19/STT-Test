@@ -169,7 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // implies symbol
     const symbol = document.createElement("span");
-    symbol.className = "material-symbols-outlined";
+    symbol.classList.add('arrow-symbol');
+    symbol.classList.add("material-symbols-outlined");
     symbol.textContent = "arrow_forward";
     symbol.style.fontSize = "20px";
 
@@ -179,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // remove btn
     const removeBtn = document.createElement("button");
-    removeBtn.textContent = "X";
+    removeBtn.textContent = "Delete";
     removeBtn.classList.add("remove-btn");
     removeBtn.addEventListener("click", () => removeAbbrievation(abbrievation));
     // edit btn
