@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submit-btn");
   const abbrievationInput = document.getElementById("abb-input");
   const abbrievationMeaning = document.getElementById("abb-meaning");
-  const clearAllAbbrievations = document.getElementById('clear-all-btn');
+  const clearAllAbbrievations = document.getElementById("clear-all-btn");
 
-  let abbrievationStorage = [];
+  let abbrievationStorage = []; // stores abbreviations
   let mediaRecorder;
   let recordedChunks = [];
   let isRecording = false;
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addTranscript();
 
+  // add new transcript box
   function addTranscript() {
     const transcript = document.createElement("div");
     transcript.classList.add("transcript-container");
@@ -123,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSerialNumbers();
   }
 
+  // serial number feature
   function updateSerialNumbers() {
     const transcripts = transcriptsContainer.querySelectorAll(
       ".transcript-container"
@@ -134,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // handles errors 
   function handleError(error) {
     if (currentTranscriptBox) {
       currentTranscriptBox.value = `Error: ${error.message}`;
@@ -143,33 +146,74 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleButtons(true, true, false);
   }
 
+  // toggle speech button
   function toggleButtons(transcriptEnabled, recordEnabled, stopEnabled) {
     transcriptBtn.disabled = !transcriptEnabled;
     recordAudioBtn.disabled = !recordEnabled;
     stopRecordingBtn.disabled = !stopEnabled;
   }
 
+  // create new abbreviation
   function createAbbrievation(abb, meaning) {
     const abbrievation = document.createElement("div");
     abbrievation.classList.add("abb-item");
 
-    const abbrievationShort = document.createElement("span");
-    const abbrievationMeans = document.createElement("span");
+    const abbrievationBox = document.createElement("div");
+    abbrievationBox.classList.add("abb-box");
+    const abbrievationShort = document.createElement("input");
+    const abbrievationMeans = document.createElement("input");
+    abbrievationShort.disabled = true;
+    abbrievationMeans.disabled = true;
+    abbrievationShort.value = abb;
+    abbrievationMeans.value = meaning;
+
+    // implies symbol
     const symbol = document.createElement("span");
     symbol.className = "material-symbols-outlined";
     symbol.textContent = "arrow_forward";
     symbol.style.fontSize = "20px";
 
-    abbrievationShort.textContent = abb;
-    abbrievationMeans.textContent = meaning;
+    // btns container
+    const utilBox = document.createElement("div");
+    utilBox.classList.add("util-box");
 
-    abbrievation.appendChild(abbrievationShort);
-    abbrievation.appendChild(symbol);
-    abbrievation.appendChild(abbrievationMeans);
+    // remove btn
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "X";
+    removeBtn.classList.add("remove-btn");
+    removeBtn.addEventListener("click", () => removeAbbrievation(abbrievation));
+    // edit btn
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+
+    const abbreviationObject = abbrievationStorage.find(
+      (abbObj) => abbObj.name === abb
+    );
+
+    editBtn.addEventListener("click", () => {
+      editAbbrievation(
+        abbrievationShort,
+        abbrievationMeans,
+        editBtn,
+        abbreviationObject
+      );
+    });
+
+    // appending ops
+    abbrievationBox.appendChild(abbrievationShort);
+    abbrievationBox.appendChild(symbol);
+    abbrievationBox.appendChild(abbrievationMeans);
+
+    utilBox.appendChild(editBtn);
+    utilBox.appendChild(removeBtn);
+
+    abbrievation.appendChild(abbrievationBox);
+    abbrievation.appendChild(utilBox);
 
     abbrievationsContainer.appendChild(abbrievation);
   }
 
+  // convert words from transcript into abbreviations
   function replaceAbbreviations(transcript) {
     abbrievationStorage.forEach(({ name, meaning }) => {
       const regex = new RegExp(`\\b${name}\\b`, "gi");
@@ -178,6 +222,38 @@ document.addEventListener("DOMContentLoaded", () => {
     return transcript;
   }
 
+  // remove single abbreviation
+  function removeAbbrievation(abbrievationElement) {
+    abbrievationElement.remove();
+  }
+
+  // edit abbreviation 
+  function editAbbrievation(
+    abbrievationShortElem,
+    abbrievationMeansElem,
+    editBtnElem,
+    abbreviationObject
+  ) {
+    if (editBtnElem.textContent === "Edit") {
+      abbrievationShortElem.disabled = false;
+      abbrievationMeansElem.disabled = false;
+      abbrievationShortElem.focus();
+      editBtnElem.textContent = "Save";
+    } else {
+      console.log("Entered else");
+
+      abbrievationShortElem.disabled = true;
+      abbrievationMeansElem.disabled = true;
+      editBtnElem.textContent = "Edit";
+
+      abbreviationObject.name = abbrievationShortElem.value;
+      abbreviationObject.meaning = abbrievationMeansElem.value;
+
+      console.log("Update Abbreviation: ", abbreviationObject)
+    }
+  }
+
+  // uploading audio
   async function uploadAudio(audioBlob) {
     const formData = new FormData();
     formData.append("files", audioBlob);
@@ -227,6 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // abbreviation form submit
   function handleFormSubmit(e) {
     e.preventDefault();
 
@@ -320,11 +397,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   submitBtn.addEventListener("click", handleFormSubmit);
 
-  clearAllAbbrievations.addEventListener('click', (e) => {
+  clearAllAbbrievations.addEventListener("click", (e) => {
     e.preventDefault();
     abbrievationStorage = [];
     while (abbrievationsContainer.firstChild) {
       abbrievationsContainer.removeChild(abbrievationsContainer.lastChild);
     }
-  })
+  });
 });
